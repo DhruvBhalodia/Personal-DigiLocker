@@ -14,9 +14,9 @@ document.querySelector('.container').addEventListener('submit', (event) => {
     .then((response) => response.json())
     .then((data) => {
         if (data.success) {
-            // Login successful, redirect to dashboard or show a success message
+            console.log("Success");
         } else {
-            // Login failed, show an error message
+            console.log("Fail");
         }
     });
 });
