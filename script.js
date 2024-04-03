@@ -4,7 +4,7 @@ document.querySelector('.container').addEventListener('submit', (event) => {
     const username = event.target.elements.uname.value;
     const password = event.target.elements.psw.value;
 
-    fetch('/login', {
+    fetch('http://localhost:3000/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
