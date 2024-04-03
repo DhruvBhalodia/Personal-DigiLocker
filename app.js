@@ -1,8 +1,9 @@
 const express = require('express');
+const cors = require('cors');
 const mysql = require('mysql');
-const bcrypt = require('bcrypt');
 
 const app = express();
+app.use(cors()); // Allow all origins - This is okay for development, but be more restrictive in production.
 app.use(express.json());
 
 const db = mysql.createConnection({
@@ -17,34 +18,27 @@ db.connect((err) => {
     console.log('Connected to database');
 });
 
-app.post('/signup', async (req, res) => {
-    try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const user = { name: req.body.name, password: hashedPassword };
-        db.query('INSERT INTO users SET ?', user, (err, result) => {
-            if (err) throw err;
-            res.status(201).send('User created');
-        });
-    } catch {
-        res.status(500).send();
-    }
+app.post('/signup', (req, res) => {
+    const user = { username: req.body.username, password: req.body.password };
+    db.query('INSERT INTO users SET ?', user, (err, result) => {
+        if (err) {
+            console.error("Database error:", err);
+            return res.status(500).json({ success: false, message: 'Internal server error' });
+        }
+        res.status(201).send('User created');
+    });
 });
 
 app.post('/login', (req, res) => {
-    db.query('SELECT * FROM users WHERE name = ?', [req.body.name], async (err, results) => {
-        if (err) throw err;
+    db.query('SELECT * FROM users WHERE username = ? AND password = ?', [req.body.username, req.body.password], (err, results) => {
+        if (err) {
+            console.error("Database error:", err);
+            return res.status(500).json({ success: false, message: 'Internal server error' });
+        }
         if (results.length > 0) {
-            try {
-                if (await bcrypt.compare(req.body.password, results[0].password)) {
-                    res.send('Logged in');
-                } else {
-                    res.send('Incorrect password');
-                }
-            } catch {
-                res.status(500).send();
-            }
+            return res.status(200).json({ success: true, message: 'Logged in' });
         } else {
-            res.send('Incorrect username');
+            return res.status(401).json({ success: false, message: 'Incorrect username or password' });
         }
     });
 });
