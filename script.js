@@ -61,6 +61,7 @@ async function login(username, password) {
         })
         .then((data) => {
             console.log(data.message);
+            window.location.href = './dashboard.html';
         })
         .catch((error) => {
             console.log('There was a problem with the login operation:', error);
