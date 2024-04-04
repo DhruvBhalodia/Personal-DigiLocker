@@ -11,7 +11,7 @@ document.querySelector('.form-inner').addEventListener('submit', async (event) =
         console.log(email);
         const isAdmin = false;
         const isLogin = false;
-        signUp(username, password, isAdmin, isLogin, email);
+        signUp(username,password,isAdmin,isLogin,email);
     }
     else{
         const username = event.target.elements.uname.value;
@@ -52,16 +52,17 @@ async function login(username, password) {
         },
         body: JSON.stringify({ username, password }),
     })
-        .then((response) => {
+        .then(async (response) => {
             if (response.ok) {
                 return response.json();
             } else {
-                return response.json().then(error => { throw new Error(error.message) });
+                const error = await response.json();
+                throw new Error(error.message);
             }
         })
         .then((data) => {
             console.log(data.message);
-            window.location.href = './dashboard.html';
+            window.location.href = './upload.html';
         })
         .catch((error) => {
             console.log('There was a problem with the login operation:', error);
