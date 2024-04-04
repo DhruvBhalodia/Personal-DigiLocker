@@ -19,7 +19,7 @@ db.connect((err) => {
 });
 
 app.post('/signup', (req, res) => {
-    const user = { username: req.body.username, password: req.body.password };
+    const user = { username: req.body.username, password: req.body.password, isAdmin: req.body.isAdmin, isLogin: req.body.isLogin, email: req.body.email};
     db.query('INSERT INTO users SET ?', user, (err, result) => {
         if (err) {
             console.error("Database error:", err);

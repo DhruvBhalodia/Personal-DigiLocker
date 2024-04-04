@@ -1,38 +1,47 @@
-document.querySelector('#loginForm').addEventListener('submit', async (event) => {
+document.querySelector('.form-inner').addEventListener('submit', async (event) => {
     event.preventDefault();
-
-    const username = event.target.elements.uname.value;
-    const password = event.target.elements.psw.value;
-    const isSignUp = event.submitter.classList.contains('signup-btn'); // Check if the clicked button is the signup button
-
-    if (isSignUp) {
-        signUp(username, password);
-    } else {
+    
+    const isSignUp = event.submitter.classList.contains('signup-btn');
+    console.log(isSignUp);
+    if(isSignUp){
+        console.log("signing in");
+        const username = event.target.elements.sname.value;
+        const password = event.target.elements.spass.value;
+        const email = event.target.elements.smail.value;
+        console.log(email);
+        const isAdmin = false;
+        const isLogin = false;
+        signUp(username, password, isAdmin, isLogin, email);
+    }
+    else{
+        const username = event.target.elements.uname.value;
+        console.log(username);
+        const password = event.target.elements.psw.value;
         login(username, password);
     }
 });
 
-async function signUp(username, password) {
+async function signUp(username, password, isAdmin, isLogin, email) {
     fetch('http://localhost:3000/signup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, isAdmin, isLogin, email }),
     })
-    .then((response) => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            return response.json().then(error => { throw new Error(error.message) });
-        }
-    })
-    .then((data) => {
-        console.log(data.message);
-    })
-    .catch((error) => {
-        console.log('There was a problem with the signup operation:', error);
-    });
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return response.json().then(error => { throw new Error(error.message) });
+            }
+        })
+        .then((data) => {
+            console.log(data.message);
+        })
+        .catch((error) => {
+            console.log('There was a problem with the signup operation:', error);
+        });
 }
 
 async function login(username, password) {
@@ -43,17 +52,17 @@ async function login(username, password) {
         },
         body: JSON.stringify({ username, password }),
     })
-    .then((response) => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            return response.json().then(error => { throw new Error(error.message) });
-        }
-    })
-    .then((data) => {
-        console.log(data.message);
-    })
-    .catch((error) => {
-        console.log('There was a problem with the login operation:', error);
-    });
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return response.json().then(error => { throw new Error(error.message) });
+            }
+        })
+        .then((data) => {
+            console.log(data.message);
+        })
+        .catch((error) => {
+            console.log('There was a problem with the login operation:', error);
+        });
 }
