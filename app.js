@@ -4,7 +4,16 @@ const mysql = require('mysql');
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/') 
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname); 
+    }
+});
+const upload = multer({ storage: storage });
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -62,29 +71,31 @@ app.post('/logout', (req, res) => {
             console.error("Database error:", err);
             return res.status(500).json({ success: false, message: 'Internal server error' });
         }
+        console.log("hi");
         return res.status(200).json({ success: true, message: 'Logout' });
     });
 });
 
-app.post('/upload', upload.single('file'), (req, res) => {
-    const file = req.file;
-    const fileName = file.originalname;
-    const filePath = file.path;
-    const fileSize = file.size;
-    const uploadDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
-  
-    // Insert file metadata into the database
-    const sql = `INSERT INTO students (username, url) 
-                 VALUES (?, ?)`;
-    db.query(sql, [studentId, filePath], (err, result) => {
-      if (err) {
-        console.error('Error uploading file:', err);
-        res.status(500).send('Error uploading file');
-        return;
-      }
-      console.log('File uploaded successfully');
-    });
-  });
+app.post('/upload', upload.single('file'), async (req, res) => {
+    try {
+        const filePath = req.file.path;
+        console.log(filePath);
+        await saveFilePathToDB(filePath);
+        res.send('File uploaded and saved successfully.');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error uploading file.');
+    }
+});
+
+async function saveFilePathToDB(filePath) {
+    try {
+        db.query('INSERT INTO students (username, url) VALUES (?, ?)', [studentId, filePath]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('cant insert');
+    }
+}
 
 app.listen(3000, () => {
     console.log('Server started on port 3000');

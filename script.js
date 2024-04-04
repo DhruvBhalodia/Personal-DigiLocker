@@ -37,11 +37,13 @@ async function signUp(username, password, isAdmin, isLogin, email) {
             }
         })
         .then((data) => {
+            form.reset();
             console.log(data.message);
         })
         .catch((error) => {
             console.log('There was a problem with the signup operation:', error);
         });
+        window.location.href = 'index.html';
 }
 
 async function login(username, password) {

@@ -2,51 +2,26 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
     <link rel="stylesheet" href="upload.css">
-    <title>File Upload with Progress Bar</title>
 </head>
+
 <body>
-    <button id="logout">Logout</button>
-    <div class="container">
-        <div class="card">
-            <h1 class="app-title">
-                <i class="fas fa-file-upload"></i>
-                Student Portal
-            </h1>
-            <h3 class="app-subtitle">
-                Upload Files
-            </h3>
-            <form action="/upload" method="post" enctype="multipart/form-data">
-                <label for="fileInput" class="file-label">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    Choose a file
-                </label>
-                <input type="file" id="fileInput" class="file-input" />
-                <button>Submit</button>
-            </form>
-            <ul id="fileList"></ul>
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
-                <div class="progress-text" id="progressText"></div>
+    <div class="card">
+        <h2>Upload a File</h2>
+        <form action="http://localhost:3000/upload" method="post" id="uploadform">
+            <div class="form-group">
+                <label for="file">Select File:</label>
+                <input type="file" id="file" name="file" accept="*">
             </div>
-            <div class="file-details">
-                <div class="file-name" id="fileName"></div>
-                <button class="clear-button" id="clearButton">
-                    <i class="fas fa-times"></i>
-                    Clear
-                </button>
+            <div class="form-group">
+                <button type="submit">Upload</button>
             </div>
-            <div class="preview-container" id="previewContainer"></div>
-        </div>
-        <div id="uploadMessage" style="margin-top: 30px; font-size: medium; font-weight: bolder;"></div>
-        <div class="modal" id="myModal">
-            <span class="close" id="closeModal">&times;</span>
-            <img class="modal-content" id="uploadedImageModal">
-        </div>
+        </form>
     </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
     <script src="upload.js"></script>
 </body>
 
