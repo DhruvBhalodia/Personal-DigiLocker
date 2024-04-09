@@ -37,14 +37,14 @@ app.post('/signup', (req, res) => {
     db.query('INSERT INTO users SET ?', user, (err, result) => {
         if (err) {
             console.error("Database error:", err);
-            return res.status(500).json({ success: false, message: 'Internal server error' });
+            return res.status(401).json({ success: false, message: 'Internal server error' });
         }
         res.status(201).send('User created');
     });
 });
 let studentId = "";
 app.post('/login', (req, res) => {
-    db.query('SELECT * FROM users WHERE username = ? AND password = ?', [req.body.username, req.body.password], (err, results) => {
+    db.query('SELECT * FROM users WHERE email = ? AND password = ?', [req.body.username, req.body.password], (err, results) => {
         if (err) {
             console.error("Database error:", err);
             return res.status(500).json({ success: false, message: 'Internal server error' });

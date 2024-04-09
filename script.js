@@ -7,11 +7,18 @@ document.querySelector('.form-inner').addEventListener('submit', async (event) =
         console.log("signing in");
         const username = event.target.elements.sname.value;
         const password = event.target.elements.spass.value;
+        const cpassword = event.target.elements.cspass.value;
         const email = event.target.elements.smail.value;
         console.log(email);
         const isAdmin = false;
         const isLogin = false;
-        signUp(username,password,isAdmin,isLogin,email);
+        if(!username || !password || !cpassword || !email){
+            showError("Please enter all data mentioned !!");
+        }
+        else if(cpassword != password){
+            showError("Confirm Password and Password are not same !!");
+        }
+        else signUp(username,password,isAdmin,isLogin,email);
     }
     else{
         const username = event.target.elements.uname.value;
@@ -29,11 +36,12 @@ async function signUp(username, password, isAdmin, isLogin, email) {
         },
         body: JSON.stringify({ username, password, isAdmin, isLogin, email }),
     })
-        .then((response) => {
-            if (response.ok) {
+        .then(async (response) => {
+            if (response.status < 300) {
+                window.location.href = 'index.html';
                 return response.json();
             } else {
-                return response.json().then(error => { throw new Error(error.message) });
+                showError('There was a problem with the signup operation. ');
             }
         })
         .then((data) => {
@@ -41,9 +49,8 @@ async function signUp(username, password, isAdmin, isLogin, email) {
             console.log(data.message);
         })
         .catch((error) => {
-            showError('There was a problem with the signup operation. ' + error);
+            showError('There was a problem with the signup operation. ');
         });
-        window.location.href = 'index.html';
 }
 
 async function login(username, password) {
@@ -59,7 +66,7 @@ async function login(username, password) {
                 return response.json();
             } else {
                 const error = await response.json();
-                showError('Username or Password is incorrect. ' + error);
+                showError('Username or Password is incorrect. ');
             }
         })
         .then((data) => {
@@ -67,7 +74,7 @@ async function login(username, password) {
             window.location.href = './upload.html';
         })
         .catch((error) => {
-            showError('There was a problem with the login operation. ' + error);
+            showError('There was a problem with the login operation. ');
         });
 }
 function showError(message) {
