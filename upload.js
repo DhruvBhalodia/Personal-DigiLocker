@@ -30,6 +30,9 @@ function logout() {
             method: 'POST',
             body: ''
         });
+        if (!response.ok) {
+            console.log('Failed to upload file');
+        }
         window.location.href = 'index.html';
     }
     catch(error){
