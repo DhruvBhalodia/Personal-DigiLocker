@@ -41,7 +41,7 @@ async function signUp(username, password, isAdmin, isLogin, email) {
             console.log(data.message);
         })
         .catch((error) => {
-            console.log('There was a problem with the signup operation:', error);
+            showError('There was a problem with the signup operation. ' + error);
         });
         window.location.href = 'index.html';
 }
@@ -59,7 +59,7 @@ async function login(username, password) {
                 return response.json();
             } else {
                 const error = await response.json();
-                throw new Error(error.message);
+                showError('Username or Password is incorrect. ' + error);
             }
         })
         .then((data) => {
@@ -67,6 +67,17 @@ async function login(username, password) {
             window.location.href = './upload.html';
         })
         .catch((error) => {
-            console.log('There was a problem with the login operation:', error);
+            showError('There was a problem with the login operation. ' + error);
         });
+}
+function showError(message) {
+    const errorMessage = document.getElementById('error-message');
+    const errorText = document.getElementById('error-text');
+    errorText.textContent = message;
+    errorMessage.classList.add('show');
+}
+
+function closeErrorMessage() {
+    const errorMessage = document.getElementById('error-message');
+    errorMessage.classList.remove('show');
 }
