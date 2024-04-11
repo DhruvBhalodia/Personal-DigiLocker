@@ -52,7 +52,7 @@ app.post('/login', (req, res) => {
         if (results.length > 0) {
             studentId = req.body.username; 
 
-            let sql = `UPDATE users SET isLogin = true WHERE username = '${studentId}'`;
+            let sql = `UPDATE users SET isLogin = true WHERE email = '${studentId}'`;
             db.query(sql, (err, result) => {
                 if (err) throw err;
                 console.log('isLogin set to true successfully.');
@@ -65,7 +65,7 @@ app.post('/login', (req, res) => {
     });
 });
 app.post('/logout', (req, res) => {
-    let sql = `UPDATE users SET isLogin = false WHERE username = '${studentId}'`;
+    let sql = `UPDATE users SET isLogin = false WHERE email = '${studentId}'`;
     db.query(sql, (err, results) => {
         if (err) {
             console.error("Database error:", err);
