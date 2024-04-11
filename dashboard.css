@@ -1,0 +1,80 @@
+* {
+    font-family: "Reddit Mono", monospace;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: aliceblue;
+}
+
+.tab > a {
+    text-decoration: none;
+    color: black;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+    color: black;
+    background-color: white;
+    box-shadow: 2px 2px 20px #b9b9b9;
+    border-radius: 10px;
+}
+
+.navbar-logo img {
+    height: 40px;
+    border-radius: 50px;
+}
+
+.navbar-logo img:hover {
+    cursor: pointer;
+}
+
+.navbar-tabs {
+    display: flex;
+}
+
+.tab {
+    position: relative;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 0px 10px;
+    border-radius: 10px;
+}
+
+.tab:hover {
+    color: #43a1ff;
+}
+
+.active {
+    color: #43a1ff;
+    background-color: #b4d4f34c;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+}
+
+.dropdown-item {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    color: #43a1ff;
+    background-color: #b4d4f34c;
+}
+
+.show {
+    display: block;
+}

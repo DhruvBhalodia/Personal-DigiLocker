@@ -71,7 +71,7 @@ async function login(username, password) {
         })
         .then((data) => {
             console.log(data.message);
-            window.location.href = './upload.html';
+            window.location.href = './dashboard.html';
         })
         .catch((error) => {
             showError('There was a problem with the login operation. ');

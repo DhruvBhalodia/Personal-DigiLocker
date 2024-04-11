@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student's Personal Digilocker | Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <img src="user_image.jpg" alt="User Logo" onclick="toggleDropdown()">
+            <div class="dropdown" id="dropdown-menu">
+                <div class="dropdown-item" onclick="handleDropdownItemClick('profile')">Profile</div>
+                <div class="dropdown-item" onclick="handleDropdownItemClick('trash')">Trash</div>
+                <div class="dropdown-item" onclick="handleDropdownItemClick('logout')">Logout</div>
+            </div>
+        </div>
+        <div class="navbar-tabs">
+            <div class="tab active" onclick="showTab('home')">Home</div>
+            <div class="tab" onclick="showTab('my_files')">My Files</div>
+            <div class="tab" onclick="showTab('upload')">Upload</div>
+            <div class="tab" onclick="showTab('about')">About</div>
+            <div class="tab" onclick="showTab('contact_us')">Contact Us</div>
+        </div>
+    </nav>
+    <div id="home" class="tab-content">
+        <h2>Home</h2>
+        <p>Welcome to the home page.</p>
+    </div>
+    <div id="my_files" class="tab-content" style="display: none;">
+        <h2>My Files</h2>
+        <p>Here are your files.</p>
+    </div>
+    <div id="upload" class="tab-content" style="display: none;">
+        <div class="card">
+            <h2>Upload a File</h2>
+            <form action="http://localhost:3000/upload" method="post" id="uploadform">
+                <div class="form-group">
+                    <label for="file">Select File:</label>
+                    <input type="file" id="file" name="file" accept="*">
+                </div>
+                <div class="form-group">
+                    <button type="submit">Upload</button>
+                </div>
+            </form>
+        </div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+    <div id="about" class="tab-content" style="display: none;">
+        <h2>About</h2>
+        <p>Learn more about us.</p>
+    </div>
+    <div id="contact_us" class="tab-content" style="display: none;">
+        <h2>Contact Us</h2>
+        <p>Contact us for any queries.</p>
+    </div>
+    <script src="dashboard.js"></script>
+    <script src="upload.js"></script>
+</body>
+
+</html>
