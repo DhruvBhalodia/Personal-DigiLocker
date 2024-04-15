@@ -79,7 +79,9 @@ app.post('/logout', (req, res) => {
 app.post('/upload', upload.single('file'), async (req, res) => {
     try {
         const filePath = req.file.path;
-        console.log(filePath);
+        const folder = req.body.folder; // Get the selected folder from the request body
+        console.log("File Path:", filePath);
+        console.log("Folder:", folder);
         await saveFilePathToDB(filePath);
         res.send('File uploaded and saved successfully.');
     } catch (err) {
