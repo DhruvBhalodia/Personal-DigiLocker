@@ -78,11 +78,15 @@ app.post('/logout', (req, res) => {
 
 app.post('/upload', upload.single('file'), async (req, res) => {
     try {
+        const file = req.file;
         const filePath = req.file.path;
-        const folder = req.body.folder; // Get the selected folder from the request body
-        console.log("File Path:", filePath);
-        console.log("Folder:", folder);
-        await saveFilePathToDB(filePath);
+        const folder = req.body.folder;
+        console.log(file + " " + folder);
+        const folderPath = path.join('uploads', folder);
+        const newFilePath = path.join(folderPath, file.originalname);
+        await fs.promises.mkdir(folderPath, { recursive: true });
+        await fs.promises.rename(filePath, newFilePath);
+        await saveFilePathToDB(filePath, folder);
         res.send('File uploaded and saved successfully.');
     } catch (err) {
         console.error(err);
@@ -90,9 +94,10 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     }
 });
 
-async function saveFilePathToDB(filePath) {
+async function saveFilePathToDB(filePath, folder) {
     try {
-        db.query('INSERT INTO students (username, url) VALUES (?, ?)', [studentId, filePath]);
+        console.log("save " + folder);
+        db.query('INSERT INTO students (username, url, folder) VALUES (?, ?, ?)', [studentId, filePath, folder]);
     } catch (err) {
         console.error(err);
         res.status(500).send('cant insert');
