@@ -13,7 +13,6 @@
         <div class="navbar-logo">
             <img src="user_image.jpg" alt="User Logo" onclick="toggleDropdown()">
             <div class="dropdown" id="dropdown-menu">
-                <div class="dropdown-item" onclick="handleDropdownItemClick('profile')">Profile</div>
                 <div class="dropdown-item" onclick="handleDropdownItemClick('trash')">Trash</div>
                 <div class="dropdown-item" onclick="handleDropdownItemClick('logout')">Logout</div>
             </div>
@@ -37,7 +36,7 @@
     </div>
     <div id="upload" class="tab-content" style="display: none;">
         <div class="card">
-            <h2>Upload a File</h2>
+            <h2>⬆️Upload a File</h2>
             <form action="http://localhost:3000/upload" method="post" id="uploadform">
                 <div class="form-group">
                     <label for="file">Select File:</label>

@@ -7,10 +7,10 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/') 
+        cb(null, 'uploads/')
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname); 
+        cb(null, Date.now() + '-' + file.originalname);
     }
 });
 const upload = multer({ storage: storage });
@@ -50,7 +50,7 @@ app.post('/login', (req, res) => {
             return res.status(500).json({ success: false, message: 'Internal server error' });
         }
         if (results.length > 0) {
-            studentId = req.body.username; 
+            studentId = req.body.username;
 
             let sql = `UPDATE users SET isLogin = true WHERE email = '${studentId}'`;
             db.query(sql, (err, result) => {
@@ -111,7 +111,7 @@ app.get('/folders', (req, res) => {
 });
 
 app.get('/files', (req, res) => {
-    db.query('SELECT url FROM students WHERE username = ? AND folder = ?', [studentId, req.query.folder], (error, results) => {
+    db.query('SELECT url FROM students WHERE username = ? AND folder = ? AND trash = FALSE', [studentId, req.query.folder], (error, results) => {
         if (error) {
             console.error(`Error fetching files for folder ${req.query.folder}:`, error);
             res.status(500).json({ error: 'Internal Server Error' });
@@ -119,6 +119,20 @@ app.get('/files', (req, res) => {
         }
         res.json(results);
     });
+
+});
+
+app.get('/delete', async (req, res) => {
+    try {
+        console.log("Hii");
+        const fileName = req.query.file;
+        console.log(fileName);
+        db.query('UPDATE students SET trash = true WHERE url = ?', [fileName]);
+        res.sendStatus(200);
+    } catch (error) {
+        console.error('Error deleting file:', error);
+        res.sendStatus(500);
+    }
 });
 
 app.listen(3000, () => {

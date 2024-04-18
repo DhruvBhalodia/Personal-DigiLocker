@@ -34,15 +34,17 @@ function loadPage(pageUrl) {
         .catch(error => console.error('Error loading page:', error));
 }
 
-// Function to show the tab content based on its ID
 function showTab(tabId) {
-    // Get all tab content elements
     var tabContents = document.querySelectorAll('.tab-content');
-    // Loop through each tab content element
     tabContents.forEach(function(tabContent) {
-        // Hide all tab content elements
         tabContent.style.display = 'none';
     });
-    // Show the tab content with the specified ID
     document.getElementById(tabId).style.display = 'block';
 }
+
+function handleDropdownItemClick(action) {
+    if (action === 'trash') {
+        window.location.href = 'trash.html';
+    }
+}
+

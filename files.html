@@ -1,16 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Files</title>
+    <title>Student's Personal DigiLocker | Files</title>
     <link rel="stylesheet" href="filestyle.css">
 </head>
+
 <body>
+    <h1>
+        <img src="files.jpeg" alt="">
+        Files
+    </h1>
+    <div class="total"><b>Total Files</b>: <span class="num"></span></div>
     <div class="files-container" id="filesContainer">
 
+    </div>
+    <div id="confirmationBox" class="confirmation-box">
+        <div class="confirmation-content">
+            <h3>Are You Sure ?</h3>
+            <p>Are you sure you want to move this item to trash ?</p>
+            <button id="confirmBtn">Confirm</button>
+            <button id="cancelBtn">Cancel</button>
+        </div>
     </div>
 
     <script src="filescript.js"></script>
 </body>
+
 </html>
