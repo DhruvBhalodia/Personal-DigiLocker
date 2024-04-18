@@ -84,9 +84,10 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         console.log(file + " " + folder);
         const folderPath = path.join('uploads', folder);
         const newFilePath = path.join(folderPath, file.originalname);
+        console.log(newFilePath + " " + folderPath + " " + folder);
         await fs.promises.mkdir(folderPath, { recursive: true });
         await fs.promises.rename(filePath, newFilePath);
-        await saveFilePathToDB(filePath, folder);
+        await saveFilePathToDB(newFilePath, folder);
         res.send('File uploaded and saved successfully.');
     } catch (err) {
         console.error(err);
@@ -103,6 +104,28 @@ async function saveFilePathToDB(filePath, folder) {
         res.status(500).send('cant insert');
     }
 }
+
+app.get('/folders', (req, res) => {
+    db.query('SELECT DISTINCT folder FROM students WHERE username = ?', [studentId], (error, results) => {
+        if (error) {
+            console.error('Error fetching folders:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.get('/files', (req, res) => {
+    db.query('SELECT url FROM students WHERE username = ? AND folder = ?', [studentId, req.query.folder], (error, results) => {
+        if (error) {
+            console.error(`Error fetching files for folder ${req.query.folder}:`, error);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+        res.json(results);
+    });
+});
 
 app.listen(3000, () => {
     console.log('Server started on port 3000');
