@@ -44,13 +44,13 @@ function showTab(tabId) {
 
 function handleDropdownItemClick(action) {
     if (action === 'trash') {
-        window.location.href = 'trash.html';
+        window.location.href = '../Trash/trash.html';
     }
     if (action == 'logout') {
         fetch('http://localhost:3000/logout')
         .then(response => {
             if(response.status < 300){
-                window.location.href = 'index.html'
+                window.location.href = '../../index.html'
             }
         })
     }

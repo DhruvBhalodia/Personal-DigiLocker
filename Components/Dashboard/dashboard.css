@@ -114,7 +114,7 @@ body {
     text-align: center; 
 }
 
-.upload-form-container {
+.card {
     max-width: 300px;
     margin: 0 auto;
     margin-top: 170px;
@@ -124,24 +124,24 @@ body {
     box-shadow: 2px 2px 20px #b9b9b9;
 }
 
-.upload-form-container h2 {
+.card h2 {
     font-size: 24px;
     margin-bottom: 20px;
     text-align: center;
 }
 
-.upload-form-container .form-group {
+.card .form-group {
     margin-bottom: 15px;
 }
 
-.upload-form-container label {
+.card label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-.upload-form-container input[type="file"],
-.upload-form-container select {
+.card input[type="file"],
+.card select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -149,11 +149,11 @@ body {
     box-sizing: border-box;
 }
 
-.upload-form-container input[type="file"]::before{
+.card input[type="file"]::before{
     background-color: #45a049;
 }
 
-.upload-form-container button[type="submit"] {
+.card button[type="submit"] {
     background-color: #4CAF50;
     color: white;
     padding: 12px 20px;
@@ -165,11 +165,11 @@ body {
     margin-top: 10px;
 }
 
-.upload-form-container button[type="submit"]:hover {
+.card button[type="submit"]:hover {
     background-color: #45a049;
 }
 
-.upload-form-container .file-input-label:hover {
+.card .file-input-label:hover {
     background-color: #45a049;
 }
 
@@ -200,4 +200,14 @@ body {
 
 .form-group > label {
     margin-bottom: 10px;
+}
+
+.card > h2 {
+    display: flex;
+}
+.card > h2 > span{
+    margin-top: 10px;
+}
+.card > h2 > img {
+    width: 80px;
 }

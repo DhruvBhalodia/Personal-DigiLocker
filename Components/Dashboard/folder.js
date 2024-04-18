@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function redirectToFilesPage(folderName) {
-        const url = `files.html?folder=${encodeURIComponent(folderName)}`;
+        const url = `../Files/files.html?folder=${encodeURIComponent(folderName)}`;
         window.open(url, '_blank');
     }
 

@@ -33,7 +33,7 @@ function logout() {
         if (!response.ok) {
             console.log('Failed to upload file');
         }
-        window.location.href = 'index.html';
+        window.location.href = '../../index.html';
     }
     catch(error){
         console.error('Error logout:', error.message);
