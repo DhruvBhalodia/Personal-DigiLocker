@@ -106,14 +106,8 @@ async function saveFilePathToDB(filePath, folder) {
 }
 
 app.get('/folders', (req, res) => {
-    db.query('SELECT DISTINCT folder FROM students WHERE username = ?', [studentId], (error, results) => {
-        if (error) {
-            console.error('Error fetching folders:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-            return;
-        }
-        res.json(results);
-    });
+    var folders = ["Resume", "Result", "Assignment", "Documents", "Question Papers", "Other"];
+    res.json(folders);
 });
 
 app.get('/files', (req, res) => {

@@ -78,15 +78,25 @@ body {
 .show {
     display: block;
 }
+.folders-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    justify-content: space-around;
+}
+
 .folder {
     display: flex;
+    flex-direction: column; /* Display folder content in a column */
     align-items: center;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 10px; /* Increased padding for better spacing */
     margin: 5px;
     background-color: #f0f0f0;
     border-radius: 5px;
     transition: background-color 0.3s;
+    overflow: hidden; /* Hide overflow content */
+    font-size: larger;
 }
 
 .folder:hover {
@@ -94,26 +104,12 @@ body {
 }
 
 .folder::before {
-    content: "\1F4C1"; /* Unicode symbol for folder */
-    font-size: 20px;
-    margin-right: 10px;
+    content: "\1F4C1"; 
+    font-size: 100px; /* Increased folder icon size */
+    margin-bottom: 10px; /* Spacing between icon and folder name */
 }
 
-/* Styles for file names */
-.file {
-    display: block;
-    padding: 5px;
-    margin: 5px;
-    background-color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.folder-name {
+    text-align: center; 
 }
 
-.file:hover {
-    background-color: #f0f0f0;
-}
-.files-container > a{
-    text-decoration: none;
-    color: black;
-}

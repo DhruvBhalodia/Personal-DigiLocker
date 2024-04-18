@@ -1,37 +1,22 @@
 const foldersContainer = document.getElementById('foldersContainer');
 const filesContainer = document.getElementById('filesContainer');
 
-async function displayFolders() {
-    try {
-        const response = await fetch('http://localhost:3000/folders');
-        const folders = await response.json();
-
-        foldersContainer.innerHTML = ''; 
-        const folderNames = folders.map(folderObj => folderObj.folder);
-        folderNames.forEach(folder => {
-            const folderElement = document.createElement('div');
-            folderElement.textContent = folder;
-            folderElement.classList.add('folder');
-            folderElement.addEventListener('click', () => displayFiles(folder));
-            foldersContainer.appendChild(folderElement);
-        });
-    } catch (error) {
-        console.error('Error fetching folders:', error);
-    }
-}
-async function displayFiles(folderName) {
+async function displayFiles(folderName, folderElement) {
     try {
         const response = await fetch(`http://localhost:3000/files?folder=${folderName}`);
         const files = await response.json();
 
-        filesContainer.innerHTML = '';
+        const filesContainer = document.createElement('div');
+        filesContainer.classList.add('files-container');
+        folderElement.appendChild(filesContainer);
+
         const filesname = files.map(fileObj => fileObj.url);
         filesname.forEach(fileObj => {
-            const fileName = fileObj.split('\\').slice(-1)[0]; // Extract file name from URL
+            const fileName = fileObj.split('\\').slice(-1)[0]; 
             const fileElement = document.createElement('div');
             const fileLink = document.createElement('a');
             fileLink.href = fileObj;
-            fileLink.target = "_blank"; // Open link in new tab
+            fileLink.target = "_blank"; 
             fileElement.textContent = fileName;
             fileLink.appendChild(fileElement);
             fileLink.classList.add('file');
@@ -42,4 +27,33 @@ async function displayFiles(folderName) {
     }
 }
 
-displayFolders();
+document.addEventListener('DOMContentLoaded', () => {
+    const foldersContainer = document.getElementById('foldersContainer');
+
+    async function displayFolders() {
+        try {
+            const response = await fetch('http://localhost:3000/folders');
+            const folders = await response.json();
+            console.log(folders);
+            foldersContainer.innerHTML = '';
+            folders.forEach(folder => {
+                const folderElement = document.createElement('div');
+                folderElement.textContent = folder;
+                folderElement.classList.add('folder');
+                folderElement.addEventListener('click', async () => {
+                    redirectToFilesPage(folder)
+                });
+                foldersContainer.appendChild(folderElement);
+            });
+        } catch (error) {
+            console.error('Error fetching folders:', error);
+        }
+    }
+
+    function redirectToFilesPage(folderName) {
+        const url = `files.html?folder=${encodeURIComponent(folderName)}`;
+        window.open(url, '_blank');
+    }
+
+    displayFolders();
+});
