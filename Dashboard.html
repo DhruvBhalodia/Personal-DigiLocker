@@ -18,38 +18,35 @@
             </div>
         </div>
         <div class="navbar-tabs">
-            <div class="tab active" onclick="showTab('home')">Home</div>
-            <div class="tab" onclick="showTab('my_files')">My Files</div>
+            <div class="tab active" onclick="showTab('my_files')">My Files</div>
             <div class="tab" onclick="showTab('upload')">Upload</div>
             <div class="tab" onclick="showTab('about')">About</div>
             <div class="tab" onclick="showTab('contact_us')">Contact Us</div>
         </div>
     </nav>
-    <div id="home" class="tab-content">
-        <h2>Home</h2>
-        <p>Welcome to the home page.</p>
-    </div>
-    <div id="my_files" class="tab-content" style="display: none;">
+    <div id="my_files" class="tab-content">
         <div class="folders-container" id="foldersContainer">
     
         </div>
     </div>
     <div id="upload" class="tab-content" style="display: none;">
-        <div class="card">
-            <h2>⬆️Upload a File</h2>
-            <form action="http://localhost:3000/upload" method="post" id="uploadform">
-                <div class="form-group">
-                    <label for="file">Select File:</label>
-                    <input type="file" id="file" name="file" accept="*">
+        <div class="upload-form-container">
+            <h2>Upload Files</h2>
+            <form action="http://localhost:3000/upload" method="post" id="uploadform" enctype="multipart/form-data">
+                <div class="choose_file">
+                    <label for="choose_file">
+                        <input type="file" id="choose_file">
+                        <span>Choose Files</span>
+                    </label>
                 </div>
                 <div class="form-group">
-                    <label for="folder">Select Folder:</label>
+                    <label for="folder">Select Destination Folder:</label>
                     <select id="folder" name="folder">
                         <option value="Resume">Resume</option>
                         <option value="Result">Result</option>
                         <option value="Assignment">Assignment</option>
                         <option value="Documents">Documents</option>
-                        <option value="Question Papers">Question Papers</option>
+                        <option value="QuestionPapers">Question Papers</option>
                         <option value="Other">Other</option>
                     </select>
                 </div>
@@ -58,7 +55,7 @@
                 </div>
             </form>            
         </div>
-        <button class="logout-btn" onclick="logout()">Logout</button>
+        
     </div>
     <div id="about" class="tab-content" style="display: none;">
         <h2>About</h2>
@@ -68,9 +65,9 @@
         <h2>Contact Us</h2>
         <p>Contact us for any queries.</p>
     </div>
+    <script src="myfiles.js"></script>
     <script src="dashboard.js"></script>
     <script src="upload.js"></script>
-    <script src="myfiles.js"></script>
 </body>
 
 </html>

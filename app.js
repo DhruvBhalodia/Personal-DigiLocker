@@ -44,6 +44,7 @@ app.post('/signup', (req, res) => {
 });
 let studentId = "";
 app.post('/login', (req, res) => {
+    db.query('UPDATE users SET isLogin = false WHERE isLogin = true');
     db.query('SELECT * FROM users WHERE email = ? AND password = ?', [req.body.username, req.body.password], (err, results) => {
         if (err) {
             console.error("Database error:", err);
@@ -64,7 +65,7 @@ app.post('/login', (req, res) => {
         }
     });
 });
-app.post('/logout', (req, res) => {
+app.get('/logout', (req, res) => {
     let sql = `UPDATE users SET isLogin = false WHERE email = '${studentId}'`;
     db.query(sql, (err, results) => {
         if (err) {
@@ -72,6 +73,7 @@ app.post('/logout', (req, res) => {
             return res.status(500).json({ success: false, message: 'Internal server error' });
         }
         console.log("hi");
+        studentId = "";
         return res.status(200).json({ success: true, message: 'Logout' });
     });
 });

@@ -36,7 +36,7 @@ function loadPage(pageUrl) {
 
 function showTab(tabId) {
     var tabContents = document.querySelectorAll('.tab-content');
-    tabContents.forEach(function(tabContent) {
+    tabContents.forEach(function (tabContent) {
         tabContent.style.display = 'none';
     });
     document.getElementById(tabId).style.display = 'block';
@@ -45,6 +45,14 @@ function showTab(tabId) {
 function handleDropdownItemClick(action) {
     if (action === 'trash') {
         window.location.href = 'trash.html';
+    }
+    if (action == 'logout') {
+        fetch('http://localhost:3000/logout')
+        .then(response => {
+            if(response.status < 300){
+                window.location.href = 'index.html'
+            }
+        })
     }
 }
 
