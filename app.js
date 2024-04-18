@@ -123,15 +123,54 @@ app.get('/files', (req, res) => {
 });
 
 app.get('/delete', async (req, res) => {
+    console.log("Hii");
+    const fileName = req.query.file;
+    console.log(fileName);
+    console.log(studentId);
     try {
-        console.log("Hii");
-        const fileName = req.query.file;
-        console.log(fileName);
-        db.query('UPDATE students SET trash = true WHERE url = ?', [fileName]);
-        res.sendStatus(200);
+        db.query('UPDATE students SET trash = true WHERE url = ? AND username = ?', [fileName, studentId]);
+        console.log("success");
+        res.status(200);
     } catch (error) {
-        console.error('Error deleting file:', error);
-        res.sendStatus(500);
+        console.log('Error deleting file:', error);
+        res.status(500);
+    }
+});
+app.get('/deleteR', async (req, res) => {
+    console.log("Hii");
+    const fileName = req.query.file;
+    console.log(fileName);
+    console.log(studentId);
+    try {
+        db.query('DELETE FROM students WHERE url = ? AND username = ?', [fileName, studentId]);
+        console.log("successRRR");
+        res.status(200);
+    } catch (error) {
+        console.log('Error deleting file:', error);
+        res.status(500);
+    }
+});
+
+app.get('/tfiles', async (req, res) => {
+    db.query('SELECT url FROM students WHERE username = ? AND trash = TRUE', [studentId], (error, results) => {
+        if (error) {
+            console.error(`Error fetching files for folder ${req.query.folder}:`, error);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.get('/retrieve', async (req, res) => {
+    try {
+        const fileName = req.query.file;
+        db.query('UPDATE students SET trash = false WHERE url = ? AND username = ?', [fileName, studentId]);
+        console.log("success");
+        res.status(200);
+    } catch (error) {
+        console.log('Error deleting file:', error);
+        res.status(500);
     }
 });
 
